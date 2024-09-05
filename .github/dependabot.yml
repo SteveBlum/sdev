@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: "Docker"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    groups:
+      docker-minor-dependencies:
+        update-types:
+        - "minor"
+        - "patch"
+      docker-major-dependencies:
+        update-types:
+        - "major"
