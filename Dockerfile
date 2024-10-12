@@ -1,4 +1,4 @@
-FROM opensuse/leap:15.6
+FROM opensuse/leap@sha256:d3a517b66067d9f150dbd57d7ad28e0806025ad6f3a3e8c71b09cc7230b833a6
 WORKDIR /root/workspace
 RUN zypper ref && zypper in -y k9s neovim ripgrep git gcc openssh nodejs20 npm20 docker jq
 RUN mkdir -p /root/.config/nvim /root/.gnup
