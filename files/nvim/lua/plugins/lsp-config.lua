@@ -36,6 +36,8 @@ return {
 					"prettierd",
           "eslint_d",
 					"stylua",
+          "black",
+          "isort"
 				},
 			})
 		end,
