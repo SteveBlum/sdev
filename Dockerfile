@@ -1,6 +1,6 @@
-FROM opensuse/leap:15.6@sha256:d3a517b66067d9f150dbd57d7ad28e0806025ad6f3a3e8c71b09cc7230b833a6
+FROM opensuse/tumbleweed@sha256:093c407fed2d50c3ea26ef2a4c88cbfb067af27f56c87f3aa530e2ff789cdf7e
 WORKDIR /root/workspace
-RUN zypper ref && zypper in -y k9s neovim ripgrep git gcc openssh nodejs20 npm20 docker jq unzip python3 python312
+RUN zypper ref && zypper in -y k9s neovim ripgrep git gcc openssh nodejs22 npm22 docker jq unzip python3 python314
 RUN mkdir -p /root/.config/nvim /root/.gnup
 COPY files/start.sh /
 RUN chmod +x /start.sh
