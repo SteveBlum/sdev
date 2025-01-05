@@ -1,5 +1,4 @@
 name: Create tag increment and release
-on: pull_request
 
 permissions:
   contents: write
