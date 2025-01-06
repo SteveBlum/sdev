@@ -14,6 +14,9 @@ inputs:
     required: false
     description: "Tag to use for docker image"
     default: ${{ github.ref_name }}
+  token:
+    required: true
+    description: "Github Access Token"
 
 runs:
   using: composite
@@ -43,7 +46,7 @@ runs:
       with:
         registry: ${{ inputs.registry }}
         username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ inputs.token }}
 
     # Extract metadata (tags, labels) for Docker
     # https://github.com/docker/metadata-action
@@ -72,6 +75,7 @@ runs:
     # transparency data even for private images, pass --force to cosign below.
     # https://github.com/sigstore/cosign
     - name: Sign the published Docker image
+      shell: bash
       if: ${{ github.event_name != 'pull_request' }}
       env:
         # https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable

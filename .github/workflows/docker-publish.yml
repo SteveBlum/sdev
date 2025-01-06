@@ -16,3 +16,5 @@ jobs:
     steps:
       - name: Docker publish
         uses: ./.github/actions/docker-publish
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
