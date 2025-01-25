@@ -16,4 +16,4 @@ local opts = {}
 
 require("vim-options")
 require("lazy").setup("plugins")
-
+require("post-init")

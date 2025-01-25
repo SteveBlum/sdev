@@ -9,4 +9,5 @@ COPY files/gpg-agent.conf /root/.gnupg/
 COPY files/.gitconfig /root/
 COPY files/.bashrc /root/
 RUN nvim --headless "+Lazy! sync" +qa
+    && nvim --headless "+Lazy! load mason.nvim +MasonInstall +sleep 45" +qa
 ENTRYPOINT ["/start.sh"]
