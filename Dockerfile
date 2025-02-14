@@ -1,4 +1,4 @@
-FROM opensuse/tumbleweed@sha256:5a88483e4a64256501ad31c8cefb4e26a0802063ce63cd4c1c26e4f776074259
+FROM opensuse/tumbleweed@sha256:1c6c038b99bb201e0efb1a4b22e8f32a8e9ddbe0f1ecb06b3b9fb0b7f0407bb8
 WORKDIR /root/workspace
 RUN zypper ref && zypper in -y k9s neovim ripgrep git gcc openssh nodejs22 npm22 docker jq unzip python3 python314
 RUN mkdir -p /root/.config/nvim /root/.gnup
