@@ -1,0 +1,48 @@
+name: "release"
+description: "Creates tag and release"
+
+inputs:
+  token:
+    required: true
+    description: "Github Access Token"
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+          fetch-tags: true
+          fetch-depth: 0
+
+    - name: Determine last and new tag
+        id: get_tags
+        run: |
+          last_tag=$(git describe --abbrev=0 --tags)
+          echo "Last tag was ${last_tag}"
+          major=$(echo ${last_tag} | cut -d '.' -f 1)
+          minor=$(echo ${last_tag} | cut -d '.' -f 2)
+          patch=$(echo ${last_tag} | cut -d '.' -f 3)
+          let minor=minor+1
+          new_tag="${major}.${minor}.${patch}"
+          echo "New tag is ${new_tag}"
+          echo "new_tag=${new_tag}" >> $GITHUB_OUTPUT
+
+      - name: Create tag
+        env:
+          NEW_TAG: ${{ steps.get_tags.outputs.new_tag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a ${NEW_TAG} -m "${NEW_TAG#v}"
+          git push origin ${NEW_TAG}
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ inputs.token }}
+          NEW_TAG: ${{ steps.get_tags.outputs.new_tag }}
+        run: |
+          gh release create "${NEW_TAG}" \
+              --repo="${github.repository}" \
+              --title="${github.repository#*/} ${NEW_TAG#v}" \
+              --generate-notes 
