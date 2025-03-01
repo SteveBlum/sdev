@@ -16,17 +16,17 @@ runs:
           fetch-depth: 0
 
     - name: Determine last and new tag
-        id: get_tags
-        run: |
-          last_tag=$(git describe --abbrev=0 --tags)
-          echo "Last tag was ${last_tag}"
-          major=$(echo ${last_tag} | cut -d '.' -f 1)
-          minor=$(echo ${last_tag} | cut -d '.' -f 2)
-          patch=$(echo ${last_tag} | cut -d '.' -f 3)
-          let minor=minor+1
-          new_tag="${major}.${minor}.${patch}"
-          echo "New tag is ${new_tag}"
-          echo "new_tag=${new_tag}" >> $GITHUB_OUTPUT
+      id: get_tags
+      run: |
+        last_tag=$(git describe --abbrev=0 --tags)
+        echo "Last tag was ${last_tag}"
+        major=$(echo ${last_tag} | cut -d '.' -f 1)
+        minor=$(echo ${last_tag} | cut -d '.' -f 2)
+        patch=$(echo ${last_tag} | cut -d '.' -f 3)
+        let minor=minor+1
+        new_tag="${major}.${minor}.${patch}"
+        echo "New tag is ${new_tag}"
+        echo "new_tag=${new_tag}" >> $GITHUB_OUTPUT
 
       - name: Create tag
         env:
