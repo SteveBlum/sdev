@@ -46,6 +46,6 @@ runs:
         NEW_TAG: ${{ steps.get_tags.outputs.new_tag }}
       run: |
         gh release create "${NEW_TAG}" \
-            --repo="${github.repository}" \
-            --title="${github.repository#*/} ${NEW_TAG#v}" \
+            --repo="${GITHUB_REPOSITORY}" \
+            --title="${GITHUB_REPOSITORY#*/} ${NEW_TAG#v}" \
             --generate-notes 
