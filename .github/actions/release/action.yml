@@ -17,6 +17,7 @@ runs:
 
     - name: Determine last and new tag
       id: get_tags
+      shell: bash
       run: |
         last_tag=$(git describe --abbrev=0 --tags)
         echo "Last tag was ${last_tag}"
@@ -29,6 +30,7 @@ runs:
         echo "new_tag=${new_tag}" >> $GITHUB_OUTPUT
 
     - name: Create tag
+      shell: bash
       env:
         NEW_TAG: ${{ steps.get_tags.outputs.new_tag }}
       run: |
@@ -38,6 +40,7 @@ runs:
         git push origin ${NEW_TAG}
 
     - name: Create release
+      shell: bash
       env:
         GH_TOKEN: ${{ inputs.token }}
         NEW_TAG: ${{ steps.get_tags.outputs.new_tag }}
