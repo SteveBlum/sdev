@@ -28,21 +28,21 @@ runs:
         echo "New tag is ${new_tag}"
         echo "new_tag=${new_tag}" >> $GITHUB_OUTPUT
 
-      - name: Create tag
-        env:
-          NEW_TAG: ${{ steps.get_tags.outputs.new_tag }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git tag -a ${NEW_TAG} -m "${NEW_TAG#v}"
-          git push origin ${NEW_TAG}
+    - name: Create tag
+      env:
+        NEW_TAG: ${{ steps.get_tags.outputs.new_tag }}
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git tag -a ${NEW_TAG} -m "${NEW_TAG#v}"
+        git push origin ${NEW_TAG}
 
-      - name: Create release
-        env:
-          GH_TOKEN: ${{ inputs.token }}
-          NEW_TAG: ${{ steps.get_tags.outputs.new_tag }}
-        run: |
-          gh release create "${NEW_TAG}" \
-              --repo="${github.repository}" \
-              --title="${github.repository#*/} ${NEW_TAG#v}" \
-              --generate-notes 
+    - name: Create release
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+        NEW_TAG: ${{ steps.get_tags.outputs.new_tag }}
+      run: |
+        gh release create "${NEW_TAG}" \
+            --repo="${github.repository}" \
+            --title="${github.repository#*/} ${NEW_TAG#v}" \
+            --generate-notes 
