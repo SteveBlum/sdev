@@ -6,6 +6,11 @@ inputs:
     required: true
     description: "Github Access Token"
 
+outputs:
+  new_tag:
+    description: "Name of the new tag an release"
+    value: ${{ steps.get_tags.outputs.new_tag }}
+
 runs:
   using: composite
   steps:
