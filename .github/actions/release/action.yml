@@ -5,6 +5,10 @@ inputs:
   token:
     required: true
     description: "Github Access Token"
+  branch:
+    required: false
+    description: "Target branch to create the release on"
+    default: "main"
 
 outputs:
   new_tag:
@@ -19,6 +23,7 @@ runs:
       with:
           fetch-tags: true
           fetch-depth: 0
+          ref: ${{ inputs.branch }}
 
     - name: Determine last and new tag
       id: get_tags
@@ -49,8 +54,10 @@ runs:
       env:
         GH_TOKEN: ${{ inputs.token }}
         NEW_TAG: ${{ steps.get_tags.outputs.new_tag }}
+        BRANCH: ${{ inputs.branch }}
       run: |
         gh release create "${NEW_TAG}" \
             --repo="${GITHUB_REPOSITORY}" \
             --title="${GITHUB_REPOSITORY#*/} ${NEW_TAG#v}" \
+            --target="${BRANCH}" \
             --generate-notes 
