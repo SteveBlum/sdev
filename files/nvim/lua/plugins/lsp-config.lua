@@ -9,7 +9,7 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "vtsls", "pyright", "yamlls" },
+				ensure_installed = { "lua_ls", "vtsls", "pyright", "yamlls", "helm_ls" },
 			})
 		end,
 	},
@@ -30,6 +30,16 @@ return {
       })
       lspconfig.yamlls.setup({
         capabilities = capabilities
+      })
+      lspconfig.helm_ls.setup({
+        capabilities = capabilities,
+        settings = {
+          ['helm-ls'] = {
+            yamlls = {
+              path = "yaml-language-server",
+            }
+          }
+        }
       })
 
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
