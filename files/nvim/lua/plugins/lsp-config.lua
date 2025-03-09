@@ -9,7 +9,6 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "vtsls", "pyright", "yamlls", "helm_ls" },
 			})
 		end,
 	},
@@ -59,7 +58,13 @@ return {
           "eslint_d",
 					"stylua",
           "black",
-          "isort"
+          "isort",
+          "lua_ls",
+          "vtsls",
+          "pyright",
+          "yamlls",
+          "helm_ls",
+          "rust_analyzer"
 				},
 			})
 		end,
