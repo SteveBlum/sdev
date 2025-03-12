@@ -11,5 +11,5 @@ COPY files/nvim/ /root/.config/nvim/
 COPY files/gpg-agent.conf /root/.gnupg/
 COPY files/.gitconfig /root/
 #RUN nvim --headless "+Lazy! sync" +qa
-RUN nvim --headless -c 'luafile /root/.config/nvim/install.lua' -c 'qall' \
+RUN nvim --headless -c 'luafile /root/.config/nvim/install.lua' -c 'qall'
 ENTRYPOINT ["/start.sh"]
