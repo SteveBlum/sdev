@@ -4,12 +4,13 @@ RUN zypper ref && zypper in -y tmux k9s kubernetes-client kubelogin neovim ripgr
 RUN rm /usr/lib64/python3.13/EXTERNALLY-MANAGED
 RUN pip install -U neovim
 RUN npm install -g neovim prettier
-RUN mkdir -p /root/.config/nvim /root/.gnup /root/scripts
+RUN mkdir -p /root/.config/nvim /root/.config/mcphub /root/.gnup /root/scripts
 COPY files/scripts/ /root/scripts/
 COPY files/.bashrc /root/
 COPY files/.tmux.conf /root/.tmux.conf
 COPY files/start.sh /
 COPY files/rustup-install.sh /
+COPY files/servers.json /root/.config/mcphub/
 RUN chmod +x /start.sh /rustup-install.sh /root/scripts/*
 RUN /rustup-install.sh -y
 COPY files/nvim/ /root/.config/nvim/
