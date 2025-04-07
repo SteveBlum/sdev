@@ -13,7 +13,8 @@
       "args": [
         "-y",
         "@modelcontextprotocol/server-filesystem",
-        "/home/steve/Git"
+        "/root/workspace",
+        "/root/shared"
       ]
     }
   }
