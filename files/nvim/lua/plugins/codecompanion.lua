@@ -11,12 +11,26 @@ return {
           return require("codecompanion.adapters").extend("gemini", {
             schema = {
               model = {
-                default = "gemini-1.5-flash",
+                default = "gemini-2.0-flash",
               },
             },
             env = {
               api_key = function()
                 return os.getenv("GEMINI_API_KEY")
+              end,
+            },
+          })
+        end,
+        anthropic = function()
+          return require("codecompanion.adapters").extend("anthropic", {
+            schema = {
+              model = {
+                default = "claude-3-7-sonnet-latest",
+              },
+            },
+            env = {
+              api_key = function()
+                return os.getenv("CLAUDE_API_KEY")
               end,
             },
           })
@@ -33,7 +47,7 @@ return {
       },
       strategies = {
         chat = {
-          adapter = "gemini",
+          adapter = "anthropic",
           tools = {
             ["mcp"] = {
               -- calling it in a function would prevent mcphub from being loaded before it's needed
