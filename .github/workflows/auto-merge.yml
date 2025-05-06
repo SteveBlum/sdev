@@ -38,4 +38,4 @@ jobs:
         uses: ./.github/actions/docker-publish
         with:
           tag: ${{ steps.release.outputs.new_tag }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PACKAGE_TOKEN }}
