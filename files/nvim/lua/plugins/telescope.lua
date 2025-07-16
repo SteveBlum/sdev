@@ -12,11 +12,11 @@ return {
 					},
 					grep_string = {
 						file_ignore_patterns = { "node_modules", ".git", ".venv" },
-						additional_args = { "--hidden" },
+						additional_args = { "--hidden", "--fixed-strings" },
 					},
 					live_grep = {
 						file_ignore_patterns = { "node_modules", ".git", ".venv" },
-						additional_args = { "--hidden" },
+						additional_args = { "--hidden", "--fixed-strings" },
 					},
 				},
 			})
