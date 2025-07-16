@@ -1,6 +1,6 @@
 FROM opensuse/tumbleweed@sha256:b8eaf10a178f7f165147a0223502e394d551195bab3b0fb37b3525bcb35b1461
 WORKDIR /root/workspace
-RUN zypper ref && zypper in -y tmux k9s kubernetes-client kubelogin neovim ripgrep git gcc openssh nodejs22 npm22 docker docker-compose jq unzip python313 python313-pip python313-uv lldb wget fd
+RUN zypper ref && zypper in -y tmux k9s kubernetes-client kubelogin neovim ripgrep git gcc openssh nodejs22 npm22 docker docker-compose jq unzip python313 python313-pip python313-uv lldb wget fd iputils
 RUN rm /usr/lib64/python3.13/EXTERNALLY-MANAGED
 RUN pip install -U neovim
 RUN npm install -g neovim prettier @modelcontextprotocol/server-filesystem mcp-server-commands
