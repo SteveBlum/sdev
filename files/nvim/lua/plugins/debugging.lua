@@ -50,29 +50,12 @@ return {
       {
         type = "pwa-node",
         request = "launch",
-        name = "Launch TS file",
-        program = "${file}",
-        cwd = vim.fn.getcwd(),
-        sourceMaps = true,
-        protocol = "inspector",
-      },
-      {
-        type = "pwa-node",
-        request = "launch",
-        name = "Launch Current File (pwa-node)",
-        cwd = vim.fn.getcwd(),
-        args = { "${file}" },
-        sourceMaps = true,
-        protocol = "inspector",
-      },
-      {
-        type = "pwa-node",
-        request = "launch",
         name = "Launch Current File (pwa-node with ts-node)",
-        cwd = vim.fn.getcwd(),
-        runtimeArgs = { "--loader", "ts-node/esm" },
+        runtimeArgs = { "-r", "ts-node/register" },
         runtimeExecutable = "node",
-        args = { "${file}" },
+        args = { "--inspect", "${file}" },
+        rootPath = "${workspaceFolder}",
+        cwd = "${workspaceFolder}",
         sourceMaps = true,
         protocol = "inspector",
         skipFiles = { "<node_internals>/**", "node_modules/**" },
@@ -109,7 +92,46 @@ return {
         internalConsoleOptions = "neverOpen",
         skipFiles = { "<node_internals>/**", "node_modules/**" },
       },
+      {
+        type = "pwa-node",
+        request = "launch",
+        name = "Launch npm run start:dev",
+        runtimeExecutable = "npm",
+        args = { "run", "start:dev" },
+        rootPath = "${workspaceFolder}",
+        cwd = vim.fn.getcwd(),
+        sourceMaps = true,
+        console = "integratedTerminal",
+        internalConsoleOptions = "neverOpen",
+        protocol = "inspector",
+        skipFiles = { "<node_internals>/**", "node_modules/**" },
+        outFiles = { "${workspaceFolder}/dist/**/*.js" },
+        resolveSourceMapLocations = {
+          "${workspaceFolder}/**",
+          "!**/node_modules/**",
+        },
+      },
+      {
+        type = "pwa-node",
+        request = "launch",
+        name = "Launch npm run start:debug",
+        runtimeExecutable = "npm",
+        args = { "run", "start:debug" },
+        rootPath = "${workspaceFolder}",
+        cwd = vim.fn.getcwd(),
+        sourceMaps = true,
+        console = "integratedTerminal",
+        internalConsoleOptions = "neverOpen",
+        protocol = "inspector",
+        skipFiles = { "<node_internals>/**", "node_modules/**" },
+        outFiles = { "${workspaceFolder}/dist/**/*.js" },
+        resolveSourceMapLocations = {
+          "${workspaceFolder}/**",
+          "!**/node_modules/**",
+        },
+      },
     }
+
     -- DAPUI Keymaps
     vim.keymap.set("n", "<leader>dq", dapui.close)
 
@@ -132,6 +154,9 @@ return {
     end
     set({ "n", "t" }, "<F3>", dap.terminate)
     set({ "n", "t" }, "<F5>", dap.continue)
+    set({ "n", "t" }, "<F10>", dap.step_over)
+    set({ "n", "t" }, "<F11>", dap.step_into)
+    set({ "n", "t" }, "<F12>", dap.step_out)
     set("n", "<leader>b", dap.toggle_breakpoint)
     set("n", "<leader>B", function()
       dap.toggle_breakpoint(vim.fn.input("Breakpoint Condition: "), nil, nil, true)
@@ -158,18 +183,5 @@ return {
     end)
     set({ "n", "v" }, "<leader>dh", widgets.hover)
     set({ "n", "v" }, "<leader>dp", widgets.preview)
-
-    dap.listeners.after.event_initialized["me.dap.keys"] = function()
-      set("n", "<down>", dap.step_over)
-      set("n", "<left>", dap.step_out)
-      set("n", "<right>", dap.step_into)
-    end
-    local reset_keys = function()
-      pcall(keymap.del, "n", "<down>")
-      pcall(keymap.del, "n", "<left>")
-      pcall(keymap.del, "n", "<right>")
-    end
-    dap.listeners.after.event_terminated["me.dap.keys"] = reset_keys
-    dap.listeners.after.disconnected["me.dap.keys"] = reset_keys
   end,
 }
