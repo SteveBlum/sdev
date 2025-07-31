@@ -1,7 +1,0 @@
-[core]
-  editor = nvim
-  pager = cat
-[commit]
-	gpgsign = true
-[tag]
-	gpgsign = true
