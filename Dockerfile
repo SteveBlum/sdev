@@ -1,4 +1,4 @@
-FROM opensuse/tumbleweed@sha256:631a759b53e91f96a1a7c303d21b860f465a06cef32f8d0fb632ed51cba9bb9d
+FROM opensuse/tumbleweed@sha256:7236df376eea1d06afe1520a6275d4bf7b88d781c1fa588642f60701d3a0fef1
 WORKDIR /root/workspace
 RUN zypper ref && zypper in -y tmux k9s kubernetes-client kubelogin neovim ripgrep git gcc openssh nodejs22 npm22 docker docker-compose jq unzip python313 python313-pip python313-uv lldb wget fd iputils stow awk hurl tidy lazygit zoxide fzf
 RUN rm /usr/lib64/python3.13/EXTERNALLY-MANAGED
