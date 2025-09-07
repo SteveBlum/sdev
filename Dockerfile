@@ -13,7 +13,7 @@ RUN /rustup-install.sh -y
 RUN /osh-install.sh --unattended
 RUN git clone https://github.com/SteveBlum/dotfiles.git /root/.dotfiles
 RUN rm /root/.bashrc /root/.bash_profile /root/.profile
-RUN stow -d /root/.dotfiles -t ~ bash nvim oh-my-bash tmux tpm gnupg git
+RUN stow -d /root/.dotfiles -t ~ bash nvim oh-my-bash tmux tpm gnupg git k9s
 RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
     ~/.tmux/plugins/tpm/bin/install_plugins
 #RUN nvim --headless "+Lazy! sync" +qa
