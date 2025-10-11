@@ -42,7 +42,6 @@ RUN rm /usr/lib64/python3.13/EXTERNALLY-MANAGED && \
     pip install -U neovim && \
     npm install -g neovim prettier @modelcontextprotocol/server-filesystem mcp-server-commands
 RUN mkdir -p /root/.config/nvim /root/.config/mcphub /root/.gnup /root/scripts
-COPY files/servers.json /root/.config/mcphub/
 COPY files/scripts/ /root/scripts/
 
 # Copy and prepare scripts
@@ -54,10 +53,18 @@ RUN /rustup-install.sh -y && \
     /osh-install.sh --unattended && \
     git clone https://github.com/SteveBlum/dotfiles.git /root/.dotfiles && \
     rm /root/.bashrc /root/.bash_profile /root/.profile && \
-    stow -d /root/.dotfiles -t ~ bash nvim oh-my-bash tmux tpm gnupg git k9s && \
+    stow -d /root/.dotfiles -t ~ bash nvim oh-my-bash tmux tpm gnupg git k9s mcp-server && \
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
     ~/.tmux/plugins/tpm/bin/install_plugins && \
     nvim --headless -c 'luafile /root/.config/nvim/install.lua' -c 'qall'
+
+# Prepare MCP Setup
+RUN pip install -U mcp-cli && \
+    mkdir -p /mcpworkspace && \
+    ln -s /root/workspace /mcpworkspace/workspace && \
+    ln -s /root/shared /mcpworkspace/shared && \
+    rm /root/.config/mcphub/servers.json && \
+    ln -s /root/server_config.json /root/.config/mcphub/servers.json
 
 # Set environment variables
 ENV LANG=en_US.UTF-8
