@@ -35,6 +35,7 @@ RUN zypper ref && zypper in -y \
     lazygit \
     zoxide \
     fzf \
+    yq \
     && zypper clean -a
 
 # Setup Python and Node.js
