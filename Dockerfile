@@ -4,6 +4,11 @@ LABEL description="My personal development envionment"
 
 WORKDIR /root/workspace
 
+# Set environment variables
+ENV LANG=en_US.UTF-8
+ENV EDITOR=nvim
+ENV PIPX_HOME=/root/.pipx
+
 # Install system packages
 RUN zypper ref && zypper in -y \
     tmux \
@@ -23,6 +28,7 @@ RUN zypper ref && zypper in -y \
     unzip \
     python313 \
     python313-pip \
+    python313-pipx \
     python313-uv \
     lldb \
     wget \
@@ -39,10 +45,8 @@ RUN zypper ref && zypper in -y \
     && zypper clean -a
 
 # Setup Python and Node.js
-RUN rm /usr/lib64/python3.13/EXTERNALLY-MANAGED && \
-    pip install -U neovim && \
-    npm install -g neovim prettier @modelcontextprotocol/server-filesystem mcp-server-commands
-RUN mkdir -p /root/.config/nvim /root/.config/mcphub /root/.gnup /root/scripts
+RUN mkdir -p /root/.config/nvim /root/.config/mcphub /root/.gnup /root/scripts /root/.pipx /root/.npm  && \
+    pipx ensurepath
 COPY files/scripts/ /root/scripts/
 
 # Copy and prepare scripts
@@ -60,15 +64,10 @@ RUN /rustup-install.sh -y && \
     nvim --headless -c 'luafile /root/.config/nvim/install.lua' -c 'qall'
 
 # Prepare MCP Setup
-RUN pip install -U mcp-cli && \
-    mkdir -p /mcpworkspace && \
+RUN mkdir -p /mcpworkspace && \
     ln -s /root/workspace /mcpworkspace/workspace && \
     ln -s /root/shared /mcpworkspace/shared && \
     rm /root/.config/mcphub/servers.json && \
     ln -s /root/server_config.json /root/.config/mcphub/servers.json
-
-# Set environment variables
-ENV LANG=en_US.UTF-8
-ENV EDITOR=nvim
 
 ENTRYPOINT ["/start.sh"]
