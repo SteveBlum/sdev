@@ -46,7 +46,11 @@ RUN zypper ref && zypper in -y \
 
 # Setup Python and Node.js
 RUN mkdir -p /root/.config/nvim /root/.config/mcphub /root/.gnup /root/scripts /root/.pipx /root/.npm  && \
-    pipx ensurepath
+    pipx ensurepath && \
+    npm config set prefix /root/.npm && \
+    echo "export PATH=\"/root/.npm/bin:$PATH\"" > /root/.bashrc.env && \
+    chmod +x /root/.bashrc.env
+
 COPY files/scripts/ /root/scripts/
 
 # Copy and prepare scripts
@@ -60,14 +64,11 @@ RUN /rustup-install.sh -y && \
     rm /root/.bashrc /root/.bash_profile /root/.profile && \
     stow -d /root/.dotfiles -t ~ bash nvim oh-my-bash tmux tpm gnupg git k9s mcp-server crush && \
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
-    ~/.tmux/plugins/tpm/bin/install_plugins && \
-    nvim --headless -c 'luafile /root/.config/nvim/install.lua' -c 'qall'
+    ~/.tmux/plugins/tpm/bin/install_plugins
 
 # Prepare MCP Setup
 RUN mkdir -p /mcpworkspace && \
     ln -s /root/workspace /mcpworkspace/workspace && \
-    ln -s /root/shared /mcpworkspace/shared && \
-    rm /root/.config/mcphub/servers.json && \
-    ln -s /root/server_config.json /root/.config/mcphub/servers.json
+    ln -s /root/shared /mcpworkspace/shared
 
 ENTRYPOINT ["/start.sh"]
