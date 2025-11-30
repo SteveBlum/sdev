@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Settings
+GOOSE_VERSION="1.15.0"
+
 # Check if initialization should run
 INIT_FILE="/root/.local/init"
 RUN_INIT=0
@@ -37,4 +40,10 @@ if [ "$RUN_INIT" -eq 1 ]; then
   nvim --headless -c 'luafile /root/.config/nvim/install.lua' -c 'qall'
   rm /root/.config/mcphub/servers.json
   ln -s /root/server_config.json /root/.config/mcphub/servers.json
+
+  # Goose install - only trigger in case this version isn't already installed
+  if ! command -v goose &> /dev/null || [ "$(goose --version 2>/dev/null || echo '')" != "${GOOSE_VERSION}" ]; then
+    curl -sLf "https://github.com/block/goose/releases/download/v${GOOSE_VERSION}/goose-x86_64-unknown-linux-gnu.tar.bz2" --output "/tmp/goose_install"
+    tar -xjf "/tmp/goose_install" -C "/root/.local/bin"
+  fi
 fi
