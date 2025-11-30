@@ -42,13 +42,15 @@ RUN zypper ref && zypper in -y \
     zoxide \
     fzf \
     yq \
+    bzip2 \
+    libxcb1 \
     && zypper clean -a
 
 # Setup Python and Node.js
 RUN mkdir -p /root/.config/nvim /root/.config/mcphub /root/.gnup /root/scripts /root/.pipx /root/.npm  && \
     pipx ensurepath && \
     npm config set prefix /root/.npm && \
-    echo "export PATH=\"/root/.npm/bin:$PATH\"" > /root/.bashrc.env && \
+    echo "export PATH=\"/root/.npm/bin:/root/.local/bin:$PATH\"" > /root/.bashrc.env && \
     chmod +x /root/.bashrc.env
 
 COPY files/scripts/ /root/scripts/
