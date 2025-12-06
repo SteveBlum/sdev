@@ -51,6 +51,7 @@ RUN mkdir -p /root/.config/nvim /root/.config/mcphub /root/.gnup /root/scripts /
     pipx ensurepath && \
     npm config set prefix /root/.npm && \
     echo "export PATH=\"/root/.npm/bin:/root/.local/bin:$PATH\"" > /root/.bashrc.env && \
+    echo "export GOOSE_DISABLE_KEYRING=\"true\"" >> /root/.bashrc.env && \
     chmod +x /root/.bashrc.env
 
 COPY files/scripts/ /root/scripts/
