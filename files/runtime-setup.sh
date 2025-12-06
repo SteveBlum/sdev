@@ -24,7 +24,7 @@ else
   # Check execution count
   COUNT=$(cat "$INIT_FILE")
   if [ "$COUNT" -ge 10 ]; then
-    # Executed 10 times already
+    echo "1" > "$INIT_FILE"
     RUN_INIT=1
   else
     # Increment count
