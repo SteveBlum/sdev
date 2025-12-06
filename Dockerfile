@@ -64,7 +64,7 @@ RUN /rustup-install.sh -y && \
     /osh-install.sh --unattended && \
     git clone https://github.com/SteveBlum/dotfiles.git /root/.dotfiles && \
     rm /root/.bashrc /root/.bash_profile /root/.profile && \
-    stow -d /root/.dotfiles -t ~ bash nvim oh-my-bash tmux tpm gnupg git k9s mcp-server crush && \
+    stow -d /root/.dotfiles -t ~ bash nvim oh-my-bash tmux tpm gnupg git k9s mcp-server crush goose && \
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
     ~/.tmux/plugins/tpm/bin/install_plugins
 
