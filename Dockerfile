@@ -67,6 +67,8 @@ RUN /rustup-install.sh -y && \
     rm /root/.bashrc /root/.bash_profile /root/.profile && \
     stow -d /root/.dotfiles -t ~ bash nvim oh-my-bash tmux tpm gnupg git k9s mcp-server crush goose && \
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
+    mkdir /run/tmux && \
+    chmod 1777 /run/tmux && \
     ~/.tmux/plugins/tpm/bin/install_plugins
 
 # Prepare MCP Setup
