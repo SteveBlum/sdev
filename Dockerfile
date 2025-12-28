@@ -44,6 +44,7 @@ RUN zypper ref && zypper in -y \
     yq \
     bzip2 \
     libxcb1 \
+    supervisor \
     && zypper clean -a
 
 # Setup Python and Node.js
@@ -59,6 +60,8 @@ COPY files/scripts/ /root/scripts/
 # Copy and prepare scripts
 COPY files/*.sh /
 RUN chmod +x /*.sh /root/scripts/*
+COPY files/supervisord.conf /etc/supervisord.conf
+RUN mkdir -p /var/log /var/run && chmod 755 /var/log /var/run
 
 # Install additional tools and setup environment
 RUN /rustup-install.sh -y && \
