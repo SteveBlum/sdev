@@ -36,7 +36,7 @@ fi
 if [ "$RUN_INIT" -eq 1 ]; then
   source /root/.bashrc.env
   pipx install --include-deps neovim
-  npm install -g neovim prettier @modelcontextprotocol/server-filesystem mcp-server-commands @charmland/crush @google/gemini-cli
+  npm install -g neovim prettier @modelcontextprotocol/server-filesystem mcp-server-commands @charmland/crush tree-sitter-cli
   nvim --headless -c 'luafile /root/.config/nvim/install.lua' -c 'qall'
   rm /root/.config/mcphub/servers.json
   ln -s /root/server_config.json /root/.config/mcphub/servers.json
