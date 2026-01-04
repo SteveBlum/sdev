@@ -42,8 +42,6 @@ RUN zypper ref && zypper in -y \
     zoxide \
     fzf \
     yq \
-    bzip2 \
-    libxcb1 \
     supervisor \
     && zypper clean -a
 
@@ -52,7 +50,6 @@ RUN mkdir -p /root/.config/nvim /root/.config/mcphub /root/.gnup /root/scripts /
     pipx ensurepath && \
     npm config set prefix /root/.npm && \
     echo "export PATH=\"/root/.npm/bin:/root/.local/bin:$PATH\"" > /root/.bashrc.env && \
-    echo "export GOOSE_DISABLE_KEYRING=\"true\"" >> /root/.bashrc.env && \
     chmod +x /root/.bashrc.env
 
 COPY files/scripts/ /root/scripts/
@@ -68,7 +65,7 @@ RUN /rustup-install.sh -y && \
     /osh-install.sh --unattended && \
     git clone https://github.com/SteveBlum/dotfiles.git /root/.dotfiles && \
     rm /root/.bashrc /root/.bash_profile /root/.profile && \
-    stow -d /root/.dotfiles -t ~ bash nvim oh-my-bash tmux tpm gnupg git k9s mcp-server crush goose && \
+    stow -d /root/.dotfiles -t ~ bash nvim oh-my-bash tmux tpm gnupg git k9s mcp-server opencode && \
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
     mkdir /run/tmux && \
     chmod 1777 /run/tmux && \
