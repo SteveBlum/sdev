@@ -4,6 +4,10 @@
 INIT_FILE="/root/.local/init"
 RUN_INIT=0
 
+# Create a local copy of .npmrc
+cp /root/.npmrc.host /root/.npmrc
+npm config set prefix /root/.npm
+
 # Create init file directory if it doesn't exist
 mkdir -p "$(dirname "$INIT_FILE")"
 
