@@ -20,8 +20,8 @@ RUN zypper ref && zypper in -y \
     git \
     gcc \
     openssh \
-    nodejs22 \
-    npm22 \
+    nodejs24 \
+    npm24 \
     docker \
     docker-compose \
     jq \
