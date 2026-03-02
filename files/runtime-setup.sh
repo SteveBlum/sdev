@@ -11,6 +11,11 @@ npm config set prefix /root/.npm
 # Create init file directory if it doesn't exist
 mkdir -p "$(dirname "$INIT_FILE")"
 
+# Add custom environment variables, if they exist
+if [ -v "$CUSTOM_ENV_VARS" ]; then
+  echo -e "\n$CUSTOM_ENV_VARS" >> /root/.bashrc.env
+fi
+
 # Check if init file exists
 if [ ! -f "$INIT_FILE" ]; then
   # First time execution
