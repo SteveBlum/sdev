@@ -12,7 +12,7 @@ npm config set prefix /root/.npm
 mkdir -p "$(dirname "$INIT_FILE")"
 
 # Add custom environment variables, if they exist
-if [ -v "$CUSTOM_ENV_VARS" ]; then
+if [ -n "$CUSTOM_ENV_VARS" ]; then
   echo -e "\n$CUSTOM_ENV_VARS" >> /root/.bashrc.env
 fi
 
