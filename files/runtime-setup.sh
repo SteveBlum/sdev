@@ -41,6 +41,14 @@ fi
 # Only run initialization if conditions are met
 if [ "$RUN_INIT" -eq 1 ]; then
   source /root/.bashrc.env
+  # Ensure opencode plugins directory exists and clone/update superpowers
+  PLUGINS_DIR="/root/.config/opencode/plugins"
+  mkdir -p "$PLUGINS_DIR"
+  if [ -d "$PLUGINS_DIR/superpowers/.git" ]; then
+    git -C "$PLUGINS_DIR/superpowers" pull --ff-only || git -C "$PLUGINS_DIR/superpowers" pull
+  else
+    git clone https://github.com/obra/superpowers.git "$PLUGINS_DIR/superpowers"
+  fi
   pipx install --include-deps neovim
   npm install -g neovim prettier @modelcontextprotocol/server-filesystem mcp-hub mcp-server-commands opencode-ai tree-sitter-cli
   nvim --headless -c 'luafile /root/.config/nvim/install.lua' -c 'qall'
