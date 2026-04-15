@@ -48,6 +48,7 @@ RUN zypper ref && zypper in -y \
     yq \
     supervisor \
     azure-cli \
+    helm \
     && zypper clean -a
 
 # Setup Python and Node.js
