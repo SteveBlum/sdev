@@ -9,6 +9,10 @@ ENV LANG=en_US.UTF-8
 ENV EDITOR=nvim
 ENV PIPX_HOME=/root/.pipx
 
+# for an up-to-date neovim version
+RUN zypper ar -f -p 90 https://download.opensuse.org/repositories/editors/openSUSE_Tumbleweed/ editors && \
+    zypper --gpg-auto-import-keys ref
+
 # Install system packages
 RUN zypper ref && zypper in -y \
     tmux \
