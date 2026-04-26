@@ -1,0 +1,15 @@
+#!/bin/sh
+# osc52-copy: read stdin and copy via OSC52 to terminal (supports tmux passthrough)
+# Emits nothing on success. Use as: printf 'text' | /usr/local/bin/xclip
+
+data=$(cat | base64 | tr -d '\n')
+[ -z "$data" ] && exit 0
+
+OSC52="\033]52;c;${data}\007"
+
+if [ -n "$TMUX" ]; then
+  # wrap for tmux passthrough so tmux forwards it to the underlying terminal
+  printf '\033Ptmux;\033%s\033\\' "$OSC52"
+else
+  printf '%s' "$OSC52"
+fi
