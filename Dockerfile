@@ -63,8 +63,6 @@ COPY files/scripts/ /root/scripts/
 # Copy and prepare scripts
 COPY files/*.sh /
 RUN chmod +x /*.sh /root/scripts/*
-COPY files/osc52-copy /usr/local/bin/xclip
-RUN chmod +x /usr/local/bin/xclip && ln -sf /usr/local/bin/xclip /usr/local/bin/xsel
 COPY files/supervisord.conf /etc/supervisord.conf
 RUN mkdir -p /var/log /var/run && chmod 755 /var/log /var/run
 
