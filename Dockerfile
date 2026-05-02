@@ -51,6 +51,17 @@ RUN zypper ref && zypper in -y \
     helm \
     && zypper clean -a
 
+ARG TERRAFORM_VERSION=1.15.1
+ARG TERRAFORM_SHA256=0921fee8c8435253ca49390a02109e906042e611a4e17f69e922261f5176c74f
+ARG TERRAFORM_ARCH=linux_amd64
+
+RUN wget -qO /tmp/terraform.zip \
+      "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_${TERRAFORM_ARCH}.zip" \
+  && echo "${TERRAFORM_SHA256}  /tmp/terraform.zip" | sha256sum -c - \
+  && unzip /tmp/terraform.zip -d /usr/local/bin \
+  && chmod +x /usr/local/bin/terraform \
+  && rm -f /tmp/terraform.zip
+
 # Setup Python and Node.js
 RUN mkdir -p /root/.config/nvim /root/.config/mcphub /root/.gnup /root/scripts /root/.pipx /root/.npm  && \
     pipx ensurepath && \
