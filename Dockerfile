@@ -1,4 +1,4 @@
-FROM opensuse/tumbleweed@sha256:39a3bfa2f72124241e32fbc4248d81cdac4a703785e1260a507b1a8d43b80bf3
+FROM opensuse/tumbleweed@sha256:9b49432a0e304482880d788898380c457816dd525fa8856388c09d3c5357240d
 LABEL maintainer="Steve Blum"
 LABEL description="My personal development envionment"
 
