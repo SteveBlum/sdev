@@ -78,6 +78,11 @@ RUN chmod +x /*.sh /root/scripts/*
 COPY files/supervisord.conf /etc/supervisord.conf
 RUN mkdir -p /var/log /var/run && chmod 755 /var/log /var/run
 
+# Install homebrew and make it available in subsequent layers
+ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}"
+RUN NONINTERACTIVE=1 /homebrew-install.sh && \
+    echo "export PATH=\"/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:\$PATH\"" >> /root/.bashrc.env
+
 # Install additional tools and setup environment
 RUN /rustup-install.sh -y && \
     /osh-install.sh --unattended && \
