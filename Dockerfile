@@ -79,8 +79,11 @@ COPY files/supervisord.conf /etc/supervisord.conf
 RUN mkdir -p /var/log /var/run && chmod 755 /var/log /var/run
 
 # Install homebrew and make it available in subsequent layers
+# `touch /.dockerenv` lets the installer's root-check pass under BuildKit,
+# which (unlike classic `docker build`) doesn't create that marker file itself.
 ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}"
-RUN NONINTERACTIVE=1 /homebrew-install.sh && \
+RUN touch /.dockerenv && \
+    NONINTERACTIVE=1 /homebrew-install.sh && \
     echo "export PATH=\"/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:\$PATH\"" >> /root/.bashrc.env
 
 # Install additional tools and setup environment
