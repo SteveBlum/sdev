@@ -95,7 +95,8 @@ RUN /rustup-install.sh -y && \
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
     mkdir /run/tmux && \
     chmod 1777 /run/tmux && \
-    ~/.tmux/plugins/tpm/bin/install_plugins
+    ~/.tmux/plugins/tpm/bin/install_plugins && \
+    brew install lazydocker
 
 # Prepare MCP Setup
 RUN mkdir -p /mcpworkspace && \
