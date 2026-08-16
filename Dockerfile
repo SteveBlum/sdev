@@ -50,6 +50,10 @@ RUN zypper ref && zypper in -y \
     supervisor \
     azure-cli \
     helm \
+    htop \
+    btop \
+    calcurse \
+    ranger \
     && zypper clean -a
 
 ARG TERRAFORM_VERSION=1.15.1
@@ -91,7 +95,7 @@ RUN /rustup-install.sh -y && \
     /osh-install.sh --unattended && \
     git clone https://github.com/SteveBlum/dotfiles.git /root/.dotfiles && \
     rm /root/.bashrc /root/.bash_profile /root/.profile && \
-    stow -d /root/.dotfiles -t ~ bash nvim oh-my-bash tmux tpm gnupg git k9s mcp-server opencode && \
+    stow -d /root/.dotfiles -t ~ bash nvim oh-my-bash tmux gnupg git k9s mcp-server opencode && \
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
     mkdir /run/tmux && \
     chmod 1777 /run/tmux && \
