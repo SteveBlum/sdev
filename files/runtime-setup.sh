@@ -50,7 +50,7 @@ if [ "$RUN_INIT" -eq 1 ]; then
     git clone https://github.com/obra/superpowers.git "$PLUGINS_DIR/superpowers"
   fi
   pipx install --include-deps neovim
-  npm install -g neovim prettier @modelcontextprotocol/server-filesystem mcp-hub mcp-server-commands opencode-ai tree-sitter-cli
+  npm install -g neovim prettier @modelcontextprotocol/server-filesystem mcp-hub mcp-server-commands opencode-ai tree-sitter-cli pnpm
   nvim --headless -c 'luafile /root/.config/nvim/install.lua' -c 'qall'
   rm /root/.config/mcphub/servers.json
   ln -s /root/server_config.json /root/.config/mcphub/servers.json
