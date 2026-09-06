@@ -1,5 +1,6 @@
 #!/bin/bash
 
+/root/scripts/patch-opencode-sessions-explorer.sh
 # Check if initialization should run
 INIT_FILE="/root/.local/init"
 RUN_INIT=0
