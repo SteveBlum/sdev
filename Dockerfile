@@ -54,6 +54,7 @@ RUN zypper ref && zypper in -y \
     btop \
     calcurse \
     ranger \
+    go \
     && zypper clean -a
 
 ARG TERRAFORM_VERSION=1.15.1
