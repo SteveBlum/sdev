@@ -55,6 +55,7 @@ RUN zypper ref && zypper in -y \
     calcurse \
     ranger \
     go \
+    unixODBC \
     && zypper clean -a
 
 ARG TERRAFORM_VERSION=1.15.1
