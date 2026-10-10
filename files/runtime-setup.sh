@@ -1,6 +1,5 @@
 #!/bin/bash
 
-/root/scripts/patch-opencode-sessions-explorer.sh
 # Check if initialization should run
 INIT_FILE="/root/.local/init"
 RUN_INIT=0
@@ -8,9 +7,6 @@ RUN_INIT=0
 # Create a local copy of .npmrc
 cp /root/.npmrc.host /root/.npmrc
 npm config set prefix /root/.npm
-
-# Remove the global opencode-ai package if present, without failing otherwise
-npm uninstall -g opencode-ai 2>/dev/null || true
 
 # Create init file directory if it doesn't exist
 mkdir -p "$(dirname "$INIT_FILE")"
@@ -54,7 +50,9 @@ if [ "$RUN_INIT" -eq 1 ]; then
     git clone https://github.com/obra/superpowers.git "$PLUGINS_DIR/superpowers"
   fi
   pipx install --include-deps neovim
-  npm install -g neovim prettier @modelcontextprotocol/server-filesystem mcp-hub mcp-server-commands @opencode/cli tree-sitter-cli pnpm @evenrealities/evenhub-cli @evenrealities/evenhub-simulator
+  npm install -g neovim prettier @modelcontextprotocol/server-filesystem mcp-hub mcp-server-commands @opencode/cli tree-sitter-cli pnpm @evenrealities/evenhub-cli @evenrealities/evenhub-simulator bun
+  # Install OpenCode sessions explorer plugin
+  /root/scripts/install-opencode-sessions-explorer.sh
   nvim --headless -c 'luafile /root/.config/nvim/install.lua' -c 'qall'
   rm /root/.config/mcphub/servers.json
   ln -s /root/server_config.json /root/.config/mcphub/servers.json
