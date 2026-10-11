@@ -1,0 +1,17 @@
+---
+- name: install nodejs packages
+  zypper:
+    name:
+      - nodejs24
+      - npm24
+    state: present
+  become: true
+
+- name: create npm directory
+  file:
+    path: "{{ home_dir }}/.npm"
+    state: directory
+
+- name: set npm prefix
+  command: npm config set prefix {{ home_dir }}/.npm
+

@@ -1,0 +1,9 @@
+---
+- name: install npm global packages
+  npm:
+    name: "{{ item }}"
+    global: true
+  loop:
+    - prettier
+    - pnpm
+    - bun

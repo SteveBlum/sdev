@@ -1,0 +1,8 @@
+---
+- name: install evenrealities npm packages
+  npm:
+    name: "{{ item }}"
+    global: true
+  loop:
+    - "@evenrealities/evenhub-cli"
+    - "@evenrealities/evenhub-simulator"

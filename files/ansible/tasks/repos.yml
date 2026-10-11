@@ -1,0 +1,17 @@
+---
+- name: add editors repository
+  zypper_repository:
+    name: editors
+    repo: https://download.opensuse.org/repositories/editors/openSUSE_Tumbleweed/
+    priority: 90
+    auto_import_keys: true
+  become: true
+
+- name: force https for all repositories
+  replace:
+    path: "{{ item }}"
+    regexp: '^(baseurl=)http://'
+    replace: '\1https://'
+  with_fileglob:
+    - /etc/zypp/repos.d/*.repo
+  become: true

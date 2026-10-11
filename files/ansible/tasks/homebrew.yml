@@ -1,0 +1,16 @@
+---
+- name: ensure dockerenv marker exists
+  file:
+    path: /.dockerenv
+    state: touch
+  become: true
+
+- name: install homebrew
+  command: /homebrew-install.sh
+  environment:
+    NONINTERACTIVE: "1"
+
+- name: add homebrew to bashrc env
+  lineinfile:
+    path: "{{ home_dir }}/.bashrc.env"
+    line: 'export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH"'

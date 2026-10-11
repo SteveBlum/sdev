@@ -1,0 +1,23 @@
+---
+- name: download terraform
+  get_url:
+    url: "https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_{{ terraform_arch }}.zip"
+    dest: /tmp/terraform.zip
+    checksum: "sha256:{{ terraform_sha256 }}"
+  vars:
+    terraform_version: "1.15.1"
+    terraform_sha256: "0921fee8c8435253ca49390a02109e906042e611a4e17f69e922261f5176c74f"
+    terraform_arch: "linux_amd64"
+
+- name: install terraform
+  unarchive:
+    src: /tmp/terraform.zip
+    dest: /usr/local/bin
+    remote_src: true
+    mode: "0755"
+  become: true
+
+- name: remove terraform archive
+  file:
+    path: /tmp/terraform.zip
+    state: absent

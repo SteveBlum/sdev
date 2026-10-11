@@ -1,0 +1,14 @@
+---
+- name: install neovim via pipx
+  command: pipx install --include-deps neovim
+
+- name: install neovim npm packages
+  npm:
+    name: "{{ item }}"
+    global: true
+  loop:
+    - neovim
+    - tree-sitter-cli
+
+- name: run nvim install script
+  command: nvim --headless -c 'luafile {{ home_dir }}/.config/nvim/install.lua' -c 'qall'
