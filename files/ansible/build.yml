@@ -1,0 +1,83 @@
+---
+- name: build development image
+  hosts: local
+  vars:
+    home_dir: "{{ ansible_facts['user_dir'] }}"
+
+  tasks:
+    - name: manage repositories
+      import_tasks: tasks/repos.yml
+
+    - name: install system packages
+      zypper:
+        name:
+          - k9s
+          - kubernetes-client
+          - kubelogin
+          - ripgrep
+          - git
+          - gcc
+          - openssh
+          - docker
+          - docker-compose
+          - jq
+          - unzip
+          - lldb
+          - wget
+          - fd
+          - iputils
+          - hurl
+          - tidy
+          - lazygit
+          - zoxide
+          - fzf
+          - yq
+          - supervisor
+          - azure-cli
+          - helm
+          - htop
+          - btop
+          - calcurse
+          - ranger
+          - go
+          - unixODBC
+        state: present
+        update_cache: true
+      become: true
+
+    - name: clean zypper cache
+      command: zypper clean -a
+      become: true
+
+    - name: install terraform
+      import_tasks: tasks/terraform.yml
+
+    - name: install nodejs
+      import_tasks: tasks/nodejs.yml
+
+    - name: install python
+      import_tasks: tasks/python.yml
+
+    - name: write bashrc env
+      import_tasks: tasks/bashrc.yml
+
+    - name: install homebrew
+      import_tasks: tasks/homebrew.yml
+
+    - name: install rust
+      import_tasks: tasks/rust.yml
+
+    - name: install oh-my-bash
+      command: /osh-install.sh --unattended
+
+    - name: setup dotfiles
+      import_tasks: tasks/dotfiles.yml
+
+    - name: install neovim
+      import_tasks: tasks/neovim.yml
+
+    - name: install tmux
+      import_tasks: tasks/tmux.yml
+
+    - name: install lazydocker
+      command: /home/linuxbrew/.linuxbrew/bin/brew install lazydocker

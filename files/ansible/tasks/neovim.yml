@@ -1,0 +1,6 @@
+---
+- name: install neovim package
+  zypper:
+    name: neovim
+    state: present
+  become: true

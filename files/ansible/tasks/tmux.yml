@@ -1,0 +1,21 @@
+---
+- name: install tmux package
+  zypper:
+    name: tmux
+    state: present
+  become: true
+
+- name: clone tmux plugin manager
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: "{{ home_dir }}/.tmux/plugins/tpm"
+
+- name: create tmux run directory
+  file:
+    path: /run/tmux
+    state: directory
+    mode: "1777"
+  become: true
+
+- name: install tmux plugins
+  command: "{{ home_dir }}/.tmux/plugins/tpm/bin/install_plugins"

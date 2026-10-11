@@ -5,16 +5,10 @@ INIT_FILE="/root/.local/init"
 RUN_INIT=0
 
 # Create a local copy of .npmrc
-cp /root/.npmrc.host /root/.npmrc
-npm config set prefix /root/.npm
+[ -f /root/.npmrc.host ] && cp /root/.npmrc.host /root/.npmrc
 
 # Create init file directory if it doesn't exist
 mkdir -p "$(dirname "$INIT_FILE")"
-
-# Add custom environment variables, if they exist
-if [ -n "$CUSTOM_ENV_VARS" ]; then
-  echo -e "\n$CUSTOM_ENV_VARS" >> /root/.bashrc.env
-fi
 
 # Check if init file exists
 if [ ! -f "$INIT_FILE" ]; then
@@ -40,20 +34,15 @@ fi
 
 # Only run initialization if conditions are met
 if [ "$RUN_INIT" -eq 1 ]; then
-  source /root/.bashrc.env
-  # Ensure opencode plugins directory exists and clone/update superpowers
-  PLUGINS_DIR="/root/.config/opencode/plugins"
-  mkdir -p "$PLUGINS_DIR"
-  if [ -d "$PLUGINS_DIR/superpowers/.git" ]; then
-    git -C "$PLUGINS_DIR/superpowers" pull --ff-only || git -C "$PLUGINS_DIR/superpowers" pull
-  else
-    git clone https://github.com/obra/superpowers.git "$PLUGINS_DIR/superpowers"
-  fi
-  pipx install --include-deps neovim
-  npm install -g neovim prettier @modelcontextprotocol/server-filesystem mcp-hub mcp-server-commands @opencode/cli tree-sitter-cli pnpm @evenrealities/evenhub-cli @evenrealities/evenhub-simulator bun
-  # Install OpenCode sessions explorer plugin
-  /root/scripts/install-opencode-sessions-explorer.sh
-  nvim --headless -c 'luafile /root/.config/nvim/install.lua' -c 'qall'
-  rm /root/.config/mcphub/servers.json
-  ln -s /root/server_config.json /root/.config/mcphub/servers.json
+  [ -f /root/.bashrc.env ] && source /root/.bashrc.env
+  ansible-playbook -i /root/ansible/inventory.ini /root/ansible/playbook.yml
 fi
+
+# Post-installation steps
+npm config set prefix /root/.npm
+if [ -n "$CUSTOM_ENV_VARS" ]; then
+  echo -e "\n$CUSTOM_ENV_VARS" >> /root/.bashrc.env
+fi
+git config --global user.name "$GIT_USER"
+git config --global user.email $GIT_EMAIL
+git config --global user.signingkey $GIT_SIGNINGKEY

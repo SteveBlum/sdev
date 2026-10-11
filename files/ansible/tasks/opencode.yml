@@ -1,0 +1,11 @@
+---
+- name: install opencode cli
+  npm:
+    name: "@opencode/cli"
+    global: true
+
+- name: clone or update superpowers plugin
+  git:
+    repo: https://github.com/obra/superpowers.git
+    dest: "{{ home_dir }}/.config/opencode/plugins/superpowers"
+    update: true

@@ -1,0 +1,23 @@
+---
+- name: install stow
+  zypper:
+    name: stow
+    state: present
+  become: true
+
+- name: remove default shell rc files
+  file:
+    path: "{{ home_dir }}/{{ item }}"
+    state: absent
+  loop:
+    - .bashrc
+    - .bash_profile
+    - .profile
+
+- name: clone dotfiles
+  git:
+    repo: https://github.com/SteveBlum/dotfiles.git
+    dest: "{{ home_dir }}/.dotfiles"
+
+- name: stow dotfiles
+  command: stow -d {{ home_dir }}/.dotfiles -t {{ home_dir }} bash nvim oh-my-bash tmux gnupg git k9s opencode

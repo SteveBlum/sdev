@@ -1,0 +1,17 @@
+---
+- name: install python packages
+  zypper:
+    name:
+      - python313-pip
+      - python313-pipx
+      - python313-uv
+    state: present
+  become: true
+
+- name: create pipx directory
+  file:
+    path: "{{ home_dir }}/.pipx"
+    state: directory
+
+- name: ensure pipx path
+  command: pipx ensurepath
