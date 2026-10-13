@@ -16,3 +16,6 @@
 
     - name: install evenrealities
       import_tasks: tasks/evenrealities.yml
+
+    - name: install rust crates
+      import_tasks: tasks/rust-crates.yml

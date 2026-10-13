@@ -1,0 +1,5 @@
+---
+- name: install rust crates
+  command: "{{ home_dir }}/.cargo/bin/cargo install {{ item }}"
+  loop:
+    - ck
