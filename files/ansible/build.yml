@@ -41,6 +41,8 @@
           - ranger
           - go
           - unixODBC
+          - gcc-c++
+          - openssl-devel
         state: present
         update_cache: true
       become: true
