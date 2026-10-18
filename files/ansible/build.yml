@@ -54,9 +54,6 @@
     - name: install terraform
       import_tasks: tasks/terraform.yml
 
-    - name: install nodejs
-      import_tasks: tasks/nodejs.yml
-
     - name: install python
       import_tasks: tasks/python.yml
 

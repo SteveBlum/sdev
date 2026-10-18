@@ -5,17 +5,25 @@
     home_dir: "{{ ansible_facts['user_dir'] }}"
 
   tasks:
-    - name: install npm global packages
-      import_tasks: tasks/npm-globals.yml
+    - name: install nodejs
+      import_tasks: tasks/nodejs.yml
 
-    - name: setup neovim providers
-      import_tasks: tasks/neovim-setup.yml
+    - name: install nodejs packages
+      environment:
+        FNM_DIR: "{{ home_dir }}/.local/share/fnm"
+        PATH: "{{ home_dir }}/.local/share/fnm/aliases/default/bin:{{ ansible_facts.env.PATH }}"
+      block:
+        - name: install npm global packages
+          import_tasks: tasks/npm-globals.yml
 
-    - name: install opencode
-      import_tasks: tasks/opencode.yml
+        - name: setup neovim providers
+          import_tasks: tasks/neovim-setup.yml
 
-    - name: install evenrealities
-      import_tasks: tasks/evenrealities.yml
+        - name: install opencode
+          import_tasks: tasks/opencode.yml
+
+        - name: install evenrealities
+          import_tasks: tasks/evenrealities.yml
 
     - name: install rust crates
       import_tasks: tasks/rust-crates.yml
