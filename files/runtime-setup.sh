@@ -39,7 +39,6 @@ if [ "$RUN_INIT" -eq 1 ]; then
 fi
 
 # Post-installation steps
-npm config set prefix /root/.npm
 if [ -n "$CUSTOM_ENV_VARS" ]; then
   echo -e "\n$CUSTOM_ENV_VARS" >> /root/.bashrc.env
 fi

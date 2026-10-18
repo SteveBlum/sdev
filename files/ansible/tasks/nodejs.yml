@@ -2,16 +2,23 @@
 - name: install nodejs packages
   zypper:
     name:
-      - nodejs24
-      - npm24
+      - fnm
     state: present
   become: true
 
-- name: create npm directory
-  file:
-    path: "{{ home_dir }}/.npm"
-    state: directory
+- name: Install Node.js version and set it as default
+  vars:
+    node_version: "24"
+  shell: |
+    eval "$(fnm env)"
+    fnm install {{ node_version }}
+    fnm default {{ node_version }}
+  args:
+    executable: /bin/bash
 
-- name: set npm prefix
-  command: npm config set prefix {{ home_dir }}/.npm
-
+- name: Configure shell PATH and environment for fnm in .bashrc
+  lineinfile:
+    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc.env"
+    line: 'eval "$(fnm env --use-on-cd)"'
+    create: yes
+    state: present
