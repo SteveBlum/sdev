@@ -9,12 +9,5 @@
   args:
     executable: /bin/bash
 
-- name: Configure shell PATH and environment for fnm in .bashrc
-  lineinfile:
-    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc.env"
-    line: 'eval "$(fnm env --use-on-cd)"'
-    create: yes
-    state: present
-
 - name: set npm prefix
   command: npm config set prefix {{ ansible_facts['env']['HOME'] }}/.npm
