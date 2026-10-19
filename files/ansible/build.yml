@@ -43,6 +43,7 @@
           - unixODBC
           - gcc-c++
           - openssl-devel
+          - fnm
         state: present
         update_cache: true
       become: true
