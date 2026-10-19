@@ -6,4 +6,4 @@
     mode: "0755"
     marker: "# {mark} ansible managed PATH"
     block: |
-      export PATH="{{ home_dir }}/scripts:{{ home_dir }}/.local/bin:$PATH"
+      export PATH="{{ home_dir }}/scripts:{{ home_dir }}/.npm/bin:/{{ home_dir }}/.local/bin:$PATH"

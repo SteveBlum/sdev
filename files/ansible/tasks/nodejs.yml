@@ -1,11 +1,4 @@
 ---
-- name: install nodejs packages
-  zypper:
-    name:
-      - fnm
-    state: present
-  become: true
-
 - name: Install Node.js version and set it as default
   vars:
     node_version: "24"
@@ -22,3 +15,6 @@
     line: 'eval "$(fnm env --use-on-cd)"'
     create: yes
     state: present
+
+- name: set npm prefix
+  command: npm config set prefix {{ ansible_facts['env']['HOME'] }}/.npm
