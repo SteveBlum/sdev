@@ -3,3 +3,4 @@
   command: "{{ home_dir }}/.cargo/bin/cargo install {{ item }}"
   loop:
     - ck-search
+    - bws

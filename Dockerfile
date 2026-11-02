@@ -16,12 +16,11 @@ RUN zypper ref && zypper in -y \
     ansible \
     && zypper clean -a
 
-COPY files/scripts/ /root/scripts/
 COPY files/ansible/ /root/ansible/
 
 # Copy and prepare scripts
 COPY files/*.sh /
-RUN chmod +x /*.sh /root/scripts/*
+RUN chmod +x /*.sh
 COPY files/supervisord.conf /etc/supervisord.conf
 RUN mkdir -p /var/log /var/run && chmod 755 /var/log /var/run
 
