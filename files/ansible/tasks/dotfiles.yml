@@ -20,4 +20,4 @@
     dest: "{{ home_dir }}/.dotfiles"
 
 - name: stow dotfiles
-  command: stow -d {{ home_dir }}/.dotfiles -t {{ home_dir }} bash nvim oh-my-bash tmux gnupg git k9s opencode
+  command: stow -d {{ home_dir }}/.dotfiles -t {{ home_dir }} bash nvim oh-my-bash tmux gnupg git k9s opencode bws
