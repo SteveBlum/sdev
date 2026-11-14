@@ -1,3 +1,10 @@
 ---
+- name: determine rustup install script location
+  stat:
+    path: /rustup-install.sh
+  register: rustup_install_script_in_root
+
 - name: install rust
-  command: /rustup-install.sh -y
+  command: >-
+    {{ '/rustup-install.sh' if rustup_install_script_in_root.stat.exists
+    else playbook_dir + '/../rustup-install.sh' }} -y

@@ -1,0 +1,15 @@
+---
+- name: determine oh-my-bash install script location
+  stat:
+    path: /osh-install.sh
+  register: osh_install_script_in_root
+
+- name: install oh-my-bash
+  command: >-
+    {{ '/osh-install.sh' if osh_install_script_in_root.stat.exists
+    else playbook_dir + '/../osh-install.sh' }} --unattended
+  register: osh_install_result
+  changed_when: "'already have Oh My Bash installed' not in osh_install_result.stderr"
+  failed_when: >-
+    osh_install_result.rc != 0 and
+    'already have Oh My Bash installed' not in osh_install_result.stderr

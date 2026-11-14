@@ -5,8 +5,15 @@
     state: touch
   become: true
 
+- name: determine homebrew install script location
+  stat:
+    path: /homebrew-install.sh
+  register: homebrew_install_script_in_root
+
 - name: install homebrew
-  command: /homebrew-install.sh
+  command: >-
+    {{ '/homebrew-install.sh' if homebrew_install_script_in_root.stat.exists
+    else playbook_dir + '/../homebrew-install.sh' }}
   environment:
     NONINTERACTIVE: "1"
 

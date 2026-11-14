@@ -68,7 +68,7 @@
       import_tasks: tasks/rust.yml
 
     - name: install oh-my-bash
-      command: /osh-install.sh --unattended
+      import_tasks: tasks/oh-my-bash.yml
 
     - name: setup dotfiles
       import_tasks: tasks/dotfiles.yml
