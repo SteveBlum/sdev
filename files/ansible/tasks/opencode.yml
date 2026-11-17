@@ -3,6 +3,7 @@
   npm:
     name: "@opencode/cli"
     global: true
+    state: latest
 
 - name: clone or update superpowers plugin
   git:
