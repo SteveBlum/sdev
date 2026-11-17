@@ -3,6 +3,7 @@
   npm:
     name: "{{ item }}"
     global: true
+    state: latest
   loop:
     - "@evenrealities/evenhub-cli"
     - "@evenrealities/evenhub-simulator"

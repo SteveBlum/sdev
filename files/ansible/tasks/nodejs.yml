@@ -11,3 +11,6 @@
 
 - name: set npm prefix
   command: npm config set prefix {{ ansible_facts['env']['HOME'] }}/.npm
+
+- name: allow install scripts for packages that fetch native binaries
+  command: npm config set allow-scripts=@opencode/cli,bun,pnpm,tree-sitter-cli --location=user
