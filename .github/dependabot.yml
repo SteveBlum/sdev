@@ -4,6 +4,9 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    cooldown:
+      exclude:
+        - "opensuse/tumbleweed"
     groups:
       docker-minor-dependencies:
         update-types:
