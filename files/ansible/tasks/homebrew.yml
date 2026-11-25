@@ -1,9 +1,18 @@
 ---
-- name: ensure dockerenv marker exists
+# homebrew-install.sh refuses root unless run via sudo (drops to SUDO_USER)
+# or inside a container (needs the dockerenv marker, e.g. the Docker build).
+- name: determine real invoking user
+  set_fact:
+    homebrew_install_user: "{{ lookup('env', 'SUDO_USER') }}"
+
+- name: ensure dockerenv marker exists for root-only installs
   file:
     path: /.dockerenv
     state: touch
   become: true
+  when:
+    - ansible_facts['effective_user_id'] == 0
+    - homebrew_install_user == ''
 
 - name: determine homebrew install script location
   stat:
@@ -16,6 +25,8 @@
     else playbook_dir + '/../homebrew-install.sh' }}
   environment:
     NONINTERACTIVE: "1"
+  become: "{{ ansible_facts['effective_user_id'] == 0 and homebrew_install_user != '' }}"
+  become_user: "{{ homebrew_install_user if (ansible_facts['effective_user_id'] == 0 and homebrew_install_user != '') else omit }}"
 
 - name: add homebrew to bashrc env
   lineinfile:
