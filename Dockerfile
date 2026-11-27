@@ -8,6 +8,8 @@ WORKDIR /root/workspace
 ENV LANG=en_US.UTF-8
 ENV EDITOR=nvim
 ENV PIPX_HOME=/root/.pipx
+ENV NPM_CONFIG_PREFIX=/root/.npm
+ENV NPM_CONFIG_USERCONFIG=/root/.npmrc.host
 ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}"
 
 # Install only what's needed to run the ansible setup

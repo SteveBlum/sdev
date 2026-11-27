@@ -4,9 +4,6 @@
 INIT_FILE="/root/.local/init"
 RUN_INIT=0
 
-# Create a local copy of .npmrc
-[ -f /root/.npmrc.host ] && cp /root/.npmrc.host /root/.npmrc
-
 # Create init file directory if it doesn't exist
 mkdir -p "$(dirname "$INIT_FILE")"
 
@@ -39,9 +36,6 @@ if [ "$RUN_INIT" -eq 1 ]; then
 fi
 
 # Post-installation steps
-# Setup npm global prefix
-npm config set prefix /root/.npm
-
 # Fetch secrets from Bitwarden Secrets Manager
 SECRETS_FILE="/root/.local/secrets.sh.gpg"
 mkdir -p "$(dirname "$SECRETS_FILE")"
